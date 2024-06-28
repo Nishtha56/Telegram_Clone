@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Clone</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.sidebar {
+  width: 30%;
+  border-right: 1px solid #ddd;
+  display: flex;
+  flex-direction: column;
+  background-color: #f8f9fa;
+  overflow-y: auto;
+}
+
+.search-box {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  background-color: #f8f9fa;
+  display: flex;
+  align-items: center;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.search-box i {
+  margin-right: 10px;
+  color: #888;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  outline: none;
+  font-size: 1rem;
+  background-color: #fff;
+  box-sizing: border-box;
+}
+
+.contacts {
+  flex: 1;
+  overflow-y: auto;
+}
+
+.contact {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+
+.contact:hover {
+  background-color: #e5e5e5;
+}
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: #ccc;
+  overflow: hidden;
+  margin-right: 15px;
+}
+
+.avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.contact-details {
+  flex: 1;
+}
+
+.contact-name {
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+.last-message {
+  color: #777;
+  font-size: 0.9rem;
+}
+
+.chat {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.chat-header {
+  padding: 15px;
+  background-color: #f1f1f1;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-header-left {
+  display: flex;
+  align-items: center;
+}
+
+.chat-header-right {
+  display: flex;
+  gap: 15px;
+}
+
+.chat-header .avatar {
+  margin-right: 15px;
+}
+
+.chat-header h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.messages {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #e5e5e5;
+  display: flex;
+  flex-direction: column;
+}
+
+.message {
+  padding: 10px 15px;
+  background-color: #fff;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  max-width: 60%;
+  display: flex;
+  flex-direction: column;
+}
+
+.message.self {
+  background-color: #dcf8c6;
+  align-self: flex-end;
+}
+
+.message .timestamp {
+  align-self: flex-end;
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+.input-box {
+  display: flex;
+  padding: 10px;
+  border-top: 1px solid #ddd;
+  background-color: #f1f1f1;
+}
+
+input[type="text"] {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  outline: none;
+  font-size: 1rem;
+}
+
+button {
+  padding: 10px 20px;
+  border: none;
+  background-color: #0088cc;
+  color: white;
+  border-radius: 5px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="Search">
+            </div>
+            <div class="contacts">
+                <div class="contact" onclick="selectContact('John Doe', 'https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?rs=1&pid=ImgDetMain')">
+                    <div class="avatar"><img src="https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?rs=1&pid=ImgDetMain" alt="Avatar"></div>
+                    <div class="contact-details">
+                        <div class="contact-name">John Doe</div>
+                        <div class="last-message">Hey, how are you?</div>
+                    </div>
+                </div>
+                <div class="contact" onclick="selectContact('Jane Smith', 'https://th.bing.com/th/id/OIP.Hqq_V0Tuqmtsdz2-dp-6SgHaHa?rs=1&pid=ImgDetMain')">
+                    <div class="avatar"><img src="https://th.bing.com/th/id/OIP.Hqq_V0Tuqmtsdz2-dp-6SgHaHa?rs=1&pid=ImgDetMain" alt="Avatar"></div>
+                    <div class="contact-details">
+                        <div class="contact-name">Jane Smith</div>
+                        <div class="last-message">Let's catch up later.</div>
+                    </div>
+                </div>
+                <div class="contact" onclick="selectContact('Harry Johnson', 'https://th.bing.com/th/id/OIP.s9JFNLzEbjoZhjijeA5X-AHaHa?rs=1&pid=ImgDetMain')">
+                    <div class="avatar"><img src="https://th.bing.com/th/id/OIP.s9JFNLzEbjoZhjijeA5X-AHaHa?rs=1&pid=ImgDetMain" alt="Avatar"></div>
+                    <div class="contact-details">
+                        <div class="contact-name">Harry Johnson</div>
+                        <div class="last-message">Are you coming to the party?</div>
+                    </div>
+                </div>
+                <div class="contact" onclick="selectContact('Alia Brown', 'https://th.bing.com/th/id/OIP.7K_F2D13RvaQxJaofs7hawHaHa?rs=1&pid=ImgDetMain')">
+                    <div class="avatar"><img src="https://th.bing.com/th/id/OIP.7K_F2D13RvaQxJaofs7hawHaHa?rs=1&pid=ImgDetMain" alt="Avatar"></div>
+                    <div class="contact-details">
+                        <div class="contact-name">Alia Brown</div>
+                        <div class="last-message">I sent you the documents.</div>
+                    </div>
+                </div>
+                <div class="contact" onclick="selectContact('Charlie Davis', 'https://th.bing.com/th/id/OIP.8xp6An8NtfQdywGOccQv0AHaHa?pid=ImgDet&w=474&h=474&rs=1')">
+                    <div class="avatar"><img src="https://th.bing.com/th/id/OIP.8xp6An8NtfQdywGOccQv0AHaHa?pid=ImgDet&w=474&h=474&rs=1" alt="Avatar"></div>
+                    <div class="contact-details">
+                        <div class="contact-name">Charlie Davis</div>
+                        <div class="last-message">Can we reschedule our meeting?</div>
+                    </div>
+                </div>
+                <div class="contact" onclick="selectContact('Den Evans', 'https://th.bing.com/th/id/OIP.dgmRq05GHYhehtJ_cybPawHaHa?rs=1&pid=ImgDetMain')">
+                    <div class="avatar"><img src="https://th.bing.com/th/id/OIP.dgmRq05GHYhehtJ_cybPawHaHa?rs=1&pid=ImgDetMain" alt="Avatar"></div>
+                    <div class="contact-details">
+                        <div class="contact-name">Den Evans</div>
+                        <div class="last-message">Thanks for your help!</div>
+                    </div>
+                </div>
+                <div class="contact" onclick="selectContact('Danial', 'https://th.bing.com/th/id/OIP.EYWUoJwu63yE6_AMbZ_X9gHaFj?pid=ImgDet&w=474&h=355&rs=1')">
+                    <div class="avatar"><img src="https://th.bing.com/th/id/OIP.EYWUoJwu63yE6_AMbZ_X9gHaFj?pid=ImgDet&w=474&h=355&rs=1" alt="Avatar"></div>
+                    <div class="contact-details">
+                        <div class="contact-name">Danial</div>
+                        <div class="last-message">Helllo!</div>
+                    </div>
+                </div>   
+            </div>
+        </div>
+        <div class="chat">
+            <div class="chat-header">
+                <div class="chat-header-left">
+                    <div class="avatar" id="chat-header-avatar"><img src="https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?rs=1&pid=ImgDetMain" alt="Avatar"></div>
+                    <h3 id="chat-header-name">John Doe</h3>
+                </div>
+                <div class="chat-header-right">
+                    <i class="fas fa-phone"></i>
+                    <i class="fas fa-ellipsis-v"></i>
+                </div>
+            </div>
+            <div class="messages" id="messages">
+                
+            </div>
+            <div class="input-box">
+                <input type="text" id="message-input" placeholder="Type a message...">
+                <button id="send-button">Send</button>
+            </div>
+        </div>
+    </div>
+    <script >
+        document.getElementById('send-button').addEventListener('click', function() {
+  sendMessage();
+});
+
+document.getElementById('message-input').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') {
+      sendMessage();
+  }
+});
+
+function sendMessage() {
+  const input = document.getElementById('message-input');
+  const message = input.value.trim();
+  if (message) {
+      const messageContainer = document.createElement('div');
+      messageContainer.classList.add('message', 'self');
+
+      const messageText = document.createElement('div');
+      messageText.textContent = message;
+      messageContainer.appendChild(messageText);
+
+      const timestamp = document.createElement('div');
+      timestamp.classList.add('timestamp');
+      timestamp.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      messageContainer.appendChild(timestamp);
+
+      document.getElementById('messages').appendChild(messageContainer);
+      input.value = '';
+      input.focus();
+      scrollToBottom();
+  }
+}
+
+function scrollToBottom() {
+  const messagesContainer = document.getElementById('messages');
+  messagesContainer.scrollTop = messagesContainer.scrollHeight;
+}
+
+function selectContact(contactName, avatarSrc) {
+  document.getElementById('chat-header-name').textContent = contactName;
+  document.getElementById('chat-header-avatar').innerHTML = `<img src="${avatarSrc}" alt="Avatar">`;
+  document.getElementById('messages').innerHTML = ''; // Clear messages when selecting a new contact
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    const contacts = [
+        { name: 'John Doe', avatar: 'https://th.bing.com/th/id/OIP.tvaMwK3QuFxhTYg4PSNNVAHaHa?rs=1&pid=ImgDetMain', lastMessage: 'Hey, how are you?' },
+        { name: 'Jane Smith', avatar: 'https://th.bing.com/th/id/OIP.Hqq_V0Tuqmtsdz2-dp-6SgHaHa?rs=1&pid=ImgDetMain', lastMessage: 'Let\'s catch up later.' },
+         { name: 'Harry Johnson', avatar: 'https://th.bing.com/th/id/OIP.s9JFNLzEbjoZhjijeA5X-AHaHa?rs=1&pid=ImgDetMain', lastMessage: 'Are you coming to the party?' },
+        
+        { name: 'Alia Brown', avatar: 'https://th.bing.com/th/id/OIP.7K_F2D13RvaQxJaofs7hawHaHa?rs=1&pid=ImgDetMain', lastMessage: 'I sent you the documents.' },
+        { name: 'Charlie Davis', avatar: 'https://th.bing.com/th/id/OIP.8xp6An8NtfQdywGOccQv0AHaHa?pid=ImgDet&w=474&h=474&rs=1', lastMessage: 'Can we reschedule our meeting?' },
+        { name: 'Den Evans', avatar: 'https://th.bing.com/th/id/OIP.dgmRq05GHYhehtJ_cybPawHaHa?rs=1&pid=ImgDetMain', lastMessage: 'Thanks for your help!' },
+      { name: 'Danial', avatar: 'https://th.bing.com/th/id/OIP.EYWUoJwu63yE6_AMbZ_X9gHaFj?pid=ImgDet&w=474&h=355&rs=1', lastMessage: 'Hello!' }
+    ];
+
+    const contactsContainer = document.querySelector('.contacts');
+    const searchInput = document.querySelector('.search-box input');
+
+    function renderContacts(contactList) {
+        contactsContainer.innerHTML = '';
+        contactList.forEach(contact => {
+            const contactElement = document.createElement('div');
+            contactElement.className = 'contact';
+            contactElement.innerHTML = `
+                <div class="avatar"><img src="${contact.avatar}" alt="Avatar"></div>
+                <div class="contact-details">
+                    <div class="contact-name">${contact.name}</div>
+                    <div class="last-message">${contact.lastMessage}</div>
+                </div>
+            `;
+            contactElement.addEventListener('click', () => selectContact(contact.name, contact.avatar));
+            contactsContainer.appendChild(contactElement);
+        });
+    }
+
+    function selectContact(name, avatar) {
+        document.getElementById('chat-header-name').textContent = name;
+        document.getElementById('chat-header-avatar').innerHTML = `<img src="${avatar}" alt="Avatar">`;
+        document.getElementById('messages').innerHTML = ''; // Clear messages for new contact
+    }
+
+    function filterContacts(event) {
+        const searchText = event.target.value.toLowerCase();
+        const filteredContacts = contacts.filter(contact => contact.name.toLowerCase().includes(searchText));
+        renderContacts(filteredContacts);
+    }
+
+    searchInput.addEventListener('input', filterContacts);
+
+    renderContacts(contacts);
+});
+
+
+
+
+    </script>
+</body>
+</html>
